@@ -1,0 +1,7 @@
+Class ID,Condition,Confidence,Estimated_Age,x,y,width,height,Total Prediction Time (s)
+0,clear face,94.89,18,88,571,249,249,3.375
+0,clear face,79.81,21,521,563,243,243,3.375
+3,wrinkles,58.83,65,879,570,342,342,3.375
+1,darkspots,98.69,29,499,22,125,125,3.375
+3,wrinkles,86.08,58,994,83,221,221,3.375
+0,clear face,53.44,18,65,71,291,291,3.375
