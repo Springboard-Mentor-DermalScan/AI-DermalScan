@@ -26,6 +26,10 @@ Web Framework	Streamlit
 Image Processing	OpenCV, Pillow
 Data Handling	Pandas, NumPy
 Visualization & Docs	Jupyter Notebook, MS Word
+
+
+
+
 📁 Project Structure
 ├── app.py                        # Streamlit frontend web application
 ├── backend.py                    # Model loading, preprocessing, and prediction logic
@@ -33,6 +37,9 @@ Visualization & Docs	Jupyter Notebook, MS Word
 ├── Project_Documentation.docx    # Project report/documentation file
 ├── requirements.txt              # Python dependencies
 └── README.md                     # Project documentation
+
+
+
 
 🧩 Installation Guide
 1️⃣ Clone the Repository
