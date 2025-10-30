@@ -43,7 +43,7 @@ Visualization & Docs	Jupyter Notebook, MS Word
 
 🧩 Installation Guide
 1️⃣ Clone the Repository
-git clone https://github.com/Springboard-Mentor-DermalScan/AI-DermalScan.git
+https://github.com/Springboard-Mentor-DermalScan/AI-DermalScan.git
 cd AI-DermalScan
 
 2️⃣ Install Dependencies
