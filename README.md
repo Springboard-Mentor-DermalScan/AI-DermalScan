@@ -166,7 +166,3 @@ Results will show the detected condition, confidence, age, and bounding box.
 ---
 
 
-
----
-
-Would you like me to include a **requirements.txt** file (with exact dependencies) for this README too?
