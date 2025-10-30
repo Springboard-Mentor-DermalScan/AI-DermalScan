@@ -1,115 +1,114 @@
-🌸 DermalScan – AI Facial Aging Detection System
+# 🌸 DermalScan – AI Facial Aging Detection System
 
-DermalScan is an AI-powered web application designed to analyze facial images and detect signs of aging such as wrinkles, dark spots, puffy eyes, and clear skin.
-The system integrates Deep Learning (InceptionV3) and Computer Vision (OpenCV) to deliver accurate predictions with annotated visual feedback.
+**DermalScan** is an intelligent AI-based web application that analyzes facial images to detect signs of aging such as **wrinkles**, **dark spots**, and **puffy eyes**, while also identifying **clear skin**.  
+The project combines **deep learning (InceptionV3)** and **computer vision** to provide accurate visual and tabular insights into facial aging patterns.
 
-💡 Objective
+---
 
-To develop a user-friendly and intelligent facial analysis platform that detects aging patterns and provides interpretable AI insights for dermatological applications.
+## 💡 Objective
+To build a user-friendly system capable of detecting and analyzing visible facial aging indicators using an efficient convolutional neural network (CNN).
 
-🧠 Key Features
+---
 
-🧍 Automatic Face Detection using OpenCV Haar Cascade.
+## 🧠 Key Features
+- 🧍 Automatic **face detection** using OpenCV Haar Cascade.  
+- 🧠 Deep learning-based classification of aging signs.  
+- 📊 Downloadable **CSV report** containing predictions and confidence scores.  
+- 🖼️ Annotated output images with bounding boxes and labels.  
+- ⚙️ Intuitive Streamlit-based web interface.
 
-🤖 Deep Learning Classification of four facial conditions.
+---
 
-🧾 Downloadable Reports (CSV and annotated images).
+## ⚙️ Technologies Used
+| Category | Tools & Libraries |
+|-----------|------------------|
+| Deep Learning | TensorFlow, Keras (InceptionV3) |
+| Web Framework | Streamlit |
+| Image Processing | OpenCV, Pillow |
+| Data Handling | Pandas, NumPy |
 
-🧠 Heuristic Age Estimation based on detected skin conditions.
+---
 
-🌐 Interactive Streamlit Web Interface for easy use.
-
-⚙️ Technologies Used
-Category	Tools / Libraries
-Deep Learning	TensorFlow, Keras (InceptionV3)
-Web Framework	Streamlit
-Image Processing	OpenCV, Pillow
-Data Handling	Pandas, NumPy
-Visualization & Docs	Jupyter Notebook, MS Word
-
-
-
-
-📁 Project Structure
-├── app.py                        # Streamlit frontend web application
-├── backend.py                    # Model loading, preprocessing, and prediction logic
-├── DermalScan_Mode.ipynb         # Jupyter notebook for model training & testing
-├── Project_Documentation.docx    # Project report/documentation file
+## 📁 Project Structure
+```
+DermalScan/
+│
+├── app.py                       # Streamlit UI application
+├── backend.py                   # Model loading, preprocessing, and prediction logic
+├── Documentation
 ├── requirements.txt              # Python dependencies
 └── README.md                     # Project documentation
+```
 
+---
 
+## 🧩 Installation Guide
 
-
-🧩 Installation Guide
-1️⃣ Clone the Repository
-https://github.com/Springboard-Mentor-DermalScan/AI-DermalScan.git
+### 1️⃣ Clone the repository
+```bash
+git clone https://github.com/Springboard-Mentor-DermalScan/AI-DermalScan.git
 cd AI-DermalScan
+```
 
-2️⃣ Install Dependencies
-
-Make sure you have Python 3.8 or later installed, then run:
-
+### 2️⃣ Install dependencies
+```bash
 pip install -r requirements.txt
+```
 
-3️⃣ Add Model File
+### 3️⃣ Add the trained model
+Download or place the model file `best_inceptionv3_model2.h5` in the project root directory.
 
-Ensure the trained model file best_inceptionv3_model2.h5 is present in the project folder.
-
-4️⃣ Launch the Application
+### 4️⃣ Run the app
+```bash
 streamlit run app.py
+```
 
+Once running, open the local URL displayed in the terminal (usually `http://localhost:8501`).
 
-Open the browser window at the provided local URL (e.g. http://localhost:8501).
+---
 
-🧬 Model Summary
+## 🧬 Model Summary
+- **Architecture:** InceptionV3 pretrained on ImageNet  
+- **Input Size:** 224 × 224 × 3  
+- **Output Classes:** 4  
+  - `clear face`
+  - `darkspots`
+  - `puffy eyes`
+  - `wrinkles`
+- **Classification Output:** Condition label + confidence percentage  
+- **Estimated Age Range:**  
+  - Clear Face → 18–30 years  
+  - Dark Spots → 30–40 years  
+  - Puffy Eyes → 40–55 years  
+  - Wrinkles → 56–75 years  
 
-Base Architecture: InceptionV3 (pretrained on ImageNet)
+---
 
-Input Size: 224 × 224 × 3
-
-Output Classes: 4
-
-Clear Face
-
-Dark Spots
-
-Puffy Eyes
-
-Wrinkles
-
-Heuristic Age Range Mapping:
-
-Clear Face → 18–30 years
-
-Dark Spots → 30–40 years
-
-Puffy Eyes → 40–55 years
-
-Wrinkles → 56–75 years
-
-🧾 requirements.txt
+## 🧾 requirements.txt
+```
 streamlit
 tensorflow
 opencv-python
 pandas
 numpy
 Pillow
+```
 
-🚀 Future Enhancements
+---
 
-Real-time webcam-based facial aging detection
+## 🚀 Future Scope
+- Integration of **real-time camera capture**
+- Implementation of **skin tone & texture analysis**
+- **Cloud-based API** deployment for faster inference
+- Model optimization for **mobile and web inference**
+- Inclusion of **dermatological recommendations**
 
-Integration of skin tone & texture analysis
+---
 
-Deployment as a REST API or cloud web app
+## 🧑‍💻 Developer
+**Battula Bhulakshmi**  
+B.Tech in Computer Science and Engineering  
+Rajiv Gandhi University of Knowledge Technologies, Ongole  
 
-Integration with dermatological recommendation systems
 
-Improved model generalization through larger, diverse datasets
-
-🧑‍💻 Developer
-
-Battula Bhulakshmi
-B.Tech in Computer Science & Engineering
-Rajiv Gandhi University of Knowledge Technologies, Ongole
+© 2025 DermalScan | AI-Powered Dermatological Intelligence
