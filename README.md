@@ -64,7 +64,6 @@ cd AI-DermalScan
 Step 2️⃣: Create and Activate a Virtual Environment
 python -m venv dermalscan_env
 dermalscan_env\Scripts\activate     # (Windows)
-# OR
 source dermalscan_env/bin/activate  # (Mac/Linux)
 
 Step 3️⃣: Install Required Libraries
