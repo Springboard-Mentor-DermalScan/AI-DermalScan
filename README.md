@@ -20,7 +20,7 @@ Puffy Eyes
 
 Clear Skin
 
-Age & Gender Estimation: Provides an estimated age and predicted gender for each detected face.
+Age Estimation: Provides an estimated age for each detected face.
 
 Visual Feedback: Displays the original image alongside the annotated image, showing bounding boxes and prediction results.
 
@@ -71,8 +71,7 @@ pip (Python package installer)
 
 Clone this project to your local machine (or download the source files).
 
-# This is a placeholder command
-git clone [https://github.com/your-username/DermalScan.git](https://github.com/your-username/DermalScan.git)
+git clone https://github.com/Springboard-Mentor-DermalScan/AI-DermalScan.git
 cd DermalScan
 
 
