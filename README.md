@@ -48,11 +48,16 @@ Development: Jupyter Notebook (for model training), VS Code
 
 DermalScan/
 │├── 📁 test/
-│   └── 📄 1.jpg         (Or other test images)
+│   └── 📄 1.jpg 
+│   └── 📄 2.jpg 
+│   └── 📄 3.jpg 
+│   └── 📄 4.jpg 
+│   └── 📄 5.jpg 
+│├── 📁 Documentation/
+│   └── 📄 DermalScan(Deepika).pdf 
 │
 ├── 📄 app1.py                      # The main Streamlit application
-├── 📄 best_inceptionv3_model.h5   # The trained skin sign model
-├── 📄 DermalScan_Training.ipynb   # Jupyter Notebook used for training
+├── 📄 Project.ipynb   # Jupyter Notebook used for training
 ├── 📄 README.md                   # This file
 └── 📄 requirements.txt            # Python dependencies
 
