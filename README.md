@@ -36,7 +36,7 @@ AI-DermalScan/
 ├── Documents/
 │   ├── AI_DermalScan.pdf
 │   ├── DermalScan_Documentation.docx
-│   └── Requirement.txt.txt
+│__ Requirement.txt  
 │
 ├── uploads/                  # Sample Test Images
 ├── results/                  # Annotated Images & CSV Exports
