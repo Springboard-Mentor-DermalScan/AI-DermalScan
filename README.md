@@ -63,7 +63,7 @@ Deployment-ready	Can be hosted on Streamlit Cloud or HuggingFace Spaces
 
 💻 How to Run Locally
 1. Clone the Repository
-git clone https://github.com/yourusername/AI-Dermal-Scan.git
+git clone https://github.com/Springboard-Mentor-DermalScan/AI-Dermal-Scan/Rohith.git
 cd AI-Dermal-Scan
 2. Install Dependencies
 pip install -r requirements.txt
