@@ -24,17 +24,14 @@ AI_DermalScan/
 │
 ├── Documentation/
 │   └── Naman Kapoor(AI_DermalScan) Documentation.pdf
-│
 ├── Naman Kapoor(AI_DermalScan).ipynb   # Model training & experimentation notebook
-│
-├── app.py                     # Streamlit frontend 
-├── backend.py                 # Backend pipeline 
-│
-├── haarcascade_frontalface_default.xml  # Face detection model
-│
-├── requirements.txt           # All required dependencies
-├── prediction_log.csv         # (Auto-generated) prediction records
-└── README.md                  # You are here
+├── test_images/                     # Sample test images 
+├── app.py                           # Streamlit frontend (UI + interaction)
+├── backend.py                       # Model loading & prediction logic
+├── haarcascade_frontalface_default.xml  # Face detector
+├── requirements.txt                 # Dependencies
+├── prediction_log.csv               # Auto-generated prediction records
+└── README.md                        # You are here
 ```
 ---
 
@@ -64,27 +61,72 @@ AI_DermalScan/
 
 ---
 
-## 💻 Setup & Installation
+## ⚙️ Setup & Installation 
 
-### 1️⃣ Clone the Repository
+### 1️⃣ Clone the Repository 
 ```bash
-git clone https://github.com/Springboard-Mentor-DermalScan/AI-DermalScan.git
+git clone -b Naman https://github.com/Springboard-Mentor-DermalScan/AI-DermalScan.git
 cd AI-DermalScan
 git checkout Naman
 ```
-### 2️⃣ Create a Virtual Environment(Optional)
+### 2️⃣ Create and Activate Virtual Environment(Recommended)
 ```bash
-python -m venv venv
-venv\Scripts\activate      # For Windows
-source venv/bin/activate   # For macOS / Linux
+python -m venv dermalscan_env
+
+# 👉 For Windows
+dermalscan_env\Scripts\activate
+
+# 👉 For macOS/Linux
+source dermalscan_env/bin/activate
 ```
-### 3️⃣ Install Dependencies
-```bash
+### 3️⃣ Install All Required Dependencies
+```
 pip install -r requirements.txt
 ```
-### 4️⃣ Run the Application
-```bash
+### 4️⃣ Generate Trained Model File 
+```
+The pretrained model file DenseNet121_best_model.h5
+is not included directly in the repository.
+You can easily generate it by running the following Jupyter Notebook: 
+Naman Kapoor(AI_DermalScan).ipynb available in repo.
+Once executed successfully, it will save the file:
+DenseNet121_best_model.h5  ✅
+```
+### 5️⃣ Ensure Haar Cascade File Exists for Face Detection
+```
+# This file is used by OpenCV to detect faces before classification.
+# The required file 'haarcascade_frontalface_default.xml' is already included.
+```
+### 6️⃣ Run the Streamlit Application
+```
 streamlit run app.py
+
+The application will automatically open in your browser:
+http://localhost:8501
+
+You can now upload an image → get real-time predictions → download results.
+```
+### 7️⃣ Test Images(Optional) 
+```
+After the Streamlit app is running, you can test with sample images provided in:
+AI_DermalScan/test_images/
+Files include:
+  test1.jpg
+  test2.jpg
+  test3.jpg
+  test4.jpg
+
+Upload these from the Streamlit sidebar to validate the model output.
+```
+### 8️⃣ View Prediction Logs(Optional)
+```
+Every prediction is automatically saved to:
+prediction_log.csv
+You can open this file in Excel or any CSV viewer to see:
+ Timestamp, Filename, Bounding_Box, Predicted_Sign, Confidence, Estimated_Age
+
+✅ Setup Complete!
+You are now ready to explore AI DermalScan’s facial aging sign detection.
 ```
 
 ---
