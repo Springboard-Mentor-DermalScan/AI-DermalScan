@@ -24,14 +24,14 @@ AI_DermalScan/
 │
 ├── Documentation/
 │   └── Naman Kapoor(AI_DermalScan) Documentation.pdf
-├── Naman Kapoor(AI_DermalScan).ipynb   # Model training & experimentation notebook
-├── test_images/                     # Sample test images 
-├── app.py                           # Streamlit frontend (UI + interaction)
-├── backend.py                       # Model loading & prediction logic
+├── Naman Kapoor(AI_DermalScan).ipynb    # Model training & experimentation notebook
+├── test_images/                         # Sample test images                 
+├── app.py                               # Streamlit frontend (UI + interaction)
+├── backend.py                           # Model loading & prediction logic
 ├── haarcascade_frontalface_default.xml  # Face detector
-├── requirements.txt                 # Dependencies
-├── prediction_log.csv               # Auto-generated prediction records
-└── README.md                        # You are here
+├── requirements.txt                     # Dependencies
+├── prediction_log.csv                   # Auto-generated prediction records
+└── README.md                            # You are here
 ```
 ---
 
@@ -67,7 +67,6 @@ AI_DermalScan/
 ```bash
 git clone -b Naman https://github.com/Springboard-Mentor-DermalScan/AI-DermalScan.git
 cd AI-DermalScan
-git checkout Naman
 ```
 ### 2️⃣ Create and Activate Virtual Environment(Recommended)
 ```bash
