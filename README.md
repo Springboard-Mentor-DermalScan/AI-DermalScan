@@ -82,43 +82,44 @@ source dermalscan_env/bin/activate
 ```
 pip install -r requirements.txt
 ```
-### 4️⃣ Generate Trained Model File 
+### 4️⃣ Download the Trained Model File 
+Download the pretrained model file DenseNet121_best_model.h5 from the following link:
 ```
-The pretrained model file DenseNet121_best_model.h5
-is not included directly in the repository.
-You can easily generate it by running the following Jupyter Notebook: 
-Naman Kapoor(AI_DermalScan).ipynb available in repo.
-Once executed successfully, it will save the file:
-DenseNet121_best_model.h5  ✅
+https://bit.ly/4qy5UJj
+```
+Once downloaded, place it inside your project root directory:
+```
+AI_DermalScan/
+│
+├── DenseNet121_best_model.h5
 ```
 ### 5️⃣ Ensure Haar Cascade File Exists for Face Detection
-```
-# This file is used by OpenCV to detect faces before classification.
-# The required file 'haarcascade_frontalface_default.xml' is already included.
-```
+This file is used by OpenCV to detect faces before classification.
+The required file 'haarcascade_frontalface_default.xml' is already included.
+
 ### 6️⃣ Run the Streamlit Application
 ```
 streamlit run app.py
-
+```
 The application will automatically open in your browser:
+```
 http://localhost:8501
-
+```
 You can now upload an image → get real-time predictions → download results.
-```
+
 ### 7️⃣ Test Images(Optional) 
-```
 After the Streamlit app is running, you can test with sample images provided in:
+```
 AI_DermalScan/test_images/
 Files include:
   test1.jpg
   test2.jpg
   test3.jpg
   test4.jpg
-
+```
 Upload these from the Streamlit sidebar to validate the model output.
-```
+
 ### 8️⃣ View Prediction Logs(Optional)
-```
 Every prediction is automatically saved to:
 prediction_log.csv
 You can open this file in Excel or any CSV viewer to see:
@@ -126,7 +127,6 @@ You can open this file in Excel or any CSV viewer to see:
 
 ✅ Setup Complete!
 You are now ready to explore AI DermalScan’s facial aging sign detection.
-```
 
 ---
 
