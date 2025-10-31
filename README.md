@@ -6,7 +6,6 @@ DermalScan is an AI-based dermatological analysis application that leverages Dee
 The system is designed with a futuristic Tech-Lab theme interface using Streamlit, providing real-time visual insights and professional-grade annotated image results.
 
 🚀 Key Features
-
 🧬 AI-Powered Skin Analysis — Detects facial features such as:
 Wrinkles
 Dark spots
@@ -14,11 +13,8 @@ Puffy eyes
 Clear facial texture
 
 📊 Biological Age Estimation — Predicts approximate age range based on detected skin features.
-
 ⚙️ Deep Learning Backbone — Fine-tuned DenseNet121 trained on curated facial datasets.
-
 🔍 Real-Time Face Detection — Powered by MTCNN for robust and multi-face detection.
-
 🧠 Interactive Streamlit Interface —
 
 Tech-inspired dark UI with animated scan sequence
@@ -46,6 +42,28 @@ AI-DermalScan/
 ├── requirements.txt               # All dependencies
 └── README.md                      # Project overview (this file)
 
+requirements.txt
+
+Save this in your project root:
+
+# ============================
+# DermalScan AI Requirements
+# Compatible with Python 3.12
+# ============================
+
+streamlit==1.38.0
+tensorflow==2.17.0
+keras==3.3.3
+opencv-python==4.10.0.84
+mtcnn==0.1.1
+pillow==10.4.0
+numpy==1.26.4
+pandas==2.2.2
+matplotlib==3.9.1
+scikit-learn==1.5.1
+h5py==3.11.0
+tqdm==4.66.5
+
 🧰 Tech Stack
 Component	Technology
 Frontend	Streamlit (Python)
@@ -55,6 +73,52 @@ Detection	MTCNN (Multi-task Cascaded Convolutional Networks)
 Image Processing	OpenCV, Pillow
 Data Handling	Pandas, NumPy
 Visualization	Matplotlib
+
+.gitignore
+
+Save this to keep your repo clean:
+
+# ============================
+# DermalScan Git Ignore Rules
+# ============================
+
+# Virtual environment
+dermalscan_env/
+venv/
+.env/
+
+# Model weights & large files
+*.h5
+*.tflite
+*.ckpt
+*.pb
+
+# Cache and build folders
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.ipynb_checkpoints/
+build/
+dist/
+
+# Streamlit, logs & temp
+.streamlit/
+logs/
+*.log
+*.tmp
+*.csv
+*.xlsx
+
+# System files
+.DS_Store
+Thumbs.db
+
+# IDE/project settings
+.vscode/
+.idea/
+*.iml
+
 
 ⚙️ Installation & Setup
 
@@ -129,6 +193,15 @@ You may use, modify, and distribute it with proper attribution.
 DermalScan is not a medical diagnostic tool.
 It is developed purely for research and educational purposes.
 For professional medical advice, always consult a certified dermatologist.
+⚙️ Performance Tips
 
-👩‍💻 Author
-Shreya Bhat
+Use @st.cache_resource to cache model and detector.
+
+Resize input images to ≤1024 px before detection.
+
+GPU users: pip install tensorflow[and-cuda] for faster inference.
+
+For deployment, consider converting the model to TFLite for smaller size and faster load.
+Author
+Shreya Bhat — aspiring Computer Science student
+🌐 Building AI that cares for your skin.
