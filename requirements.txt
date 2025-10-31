@@ -1,0 +1,35 @@
+# ============================================================
+# DermalScan AI Requirements
+# Built by: Shreya Bhat
+# Compatible with Python 3.12+
+# ============================================================
+
+# 🔹 Core Libraries
+numpy==1.26.4
+pandas==2.2.2
+matplotlib==3.9.1
+tqdm==4.66.5
+
+# 🔹 Deep Learning Stack
+tensorflow==2.17.0
+keras==3.3.3
+h5py==3.11.0
+scikit-learn==1.5.1
+
+# 🔹 Image Processing & Face Detection
+opencv-python==4.10.0.84
+mtcnn==0.1.1
+pillow==10.4.0
+
+# 🔹 Frontend (Web Interface)
+streamlit==1.38.0
+
+# 🔹 Optional (only if using notebooks)
+jupyter==1.1.1
+
+# ============================================================
+# 💡 Notes:
+# - Use: python -m venv dermalscan_env
+# - Activate env, then: pip install -r requirements.txt
+# - Run app: streamlit run app.py
+# ============================================================
