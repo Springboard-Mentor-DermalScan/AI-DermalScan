@@ -72,6 +72,7 @@ pip (Python package installer)
 Clone this project to your local machine (or download the source files).
 
 git clone https://github.com/Springboard-Mentor-DermalScan/AI-DermalScan.git
+
 cd DermalScan
 
 
