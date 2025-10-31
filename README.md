@@ -116,7 +116,7 @@ pip install -r requirements.txt
 
 This project requires one pre-trained model file that must be placed in the root directory:
 
-best_inceptionv3_model.h5: This is the skin sign classifier trained in Module 3. Place this file in the main DermalScan/ folder.
+Open the Project.ipynb file and run the cells in order. The notebook will generate a new best_inceptionv3_model.h5 file. This is the skin sign classifier trained in Module 3. Place this file in the main DermalScan/ folder.
 
 (Note: The age/gender models are downloaded automatically by the deepface library, and the Haar Cascade file is loaded automatically from opencv-python)
 
@@ -152,9 +152,6 @@ Make sure you have jupyter notebook, matplotlib, and scikit-learn installed (pip
 Run Jupyter Notebook:
 
 jupyter notebook
-
-
-Open the DermalScan_Training.ipynb file and run the cells in order. The notebook will generate a new best_inceptionv3_model.h5 file.
 
 📊 Model Performance
 
