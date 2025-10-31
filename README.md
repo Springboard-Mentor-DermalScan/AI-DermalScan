@@ -26,6 +26,8 @@ Frontend	Streamlit
 Backend	Python, Modularized Inference
 Evaluation	Accuracy, Loss, Confusion Matrix
 Exporting	CSV, Annotated Image, PDF (optional)
+
+
 📂 Repository Structure
 AI-DermalScan/
 │
@@ -36,7 +38,7 @@ AI-DermalScan/
 ├── Documents/
 │   ├── AI_DermalScan.pdf
 │   ├── DermalScan_Documentation.docx
-│__ Requirement.txt  
+│__ requirement.txt  
 │
 ├── uploads/                  # Sample Test Images
 ├── results/                  # Annotated Images & CSV Exports
@@ -63,17 +65,18 @@ streamlit run app.py
 
 📈 Project Summary
 
-
 DermalScan: AI Facial Skin Aging Detection App
 
-Developed a deep learning–based system to detect and classify facial aging signs such as wrinkles, dark spots, puffy eyes, and clear skin. The model was trained using a pretrained MobileNetV2 network with data preprocessing, augmentation, and one-hot encoding for accuracy improvement.
+Developed a deep learning–based system to detect and classify facial aging signs such as wrinkles, dark spots, puffy eyes, and clear skin. The model was trained using a pretrained MobileNetV2 network with image preprocessing, augmentation, and one-hot encoding to enhance accuracy.
 
-Implemented face detection using Haar Cascades and built an end-to-end prediction pipeline capable of identifying multiple faces in an image, estimating age, and labeling each face with bounding boxes and confidence percentages.
+The best-performing model was saved locally as best_model.h5. Using this model path, confidence, age, and class predictions were displayed below each bounding box inside the Jupyter Notebook. The same logic and model were later integrated into the Streamlit app, enabling real-time facial analysis through an interactive web interface.
 
-Integrated a Streamlit-based frontend that enables users to upload images, view real-time annotated predictions, and download results as CSV files. The backend was modularized in Python to ensure smooth and efficient inference with a prediction time of less than 5 seconds per image.
+Implemented face detection using OpenCV’s Haar Cascade classifier and built an end-to-end prediction pipeline capable of identifying multiple faces in a single image, estimating age, and displaying results with bounding boxes and confidence scores.
 
-All project files, including datasets, model scripts, and results, are documented and maintained on GitHub for transparency and reproducibility.
-👩‍💻 Intern
-Akkala Shivani Reddy
+Integrated a Streamlit-based frontend that allows users to upload images, view annotated predictions, and download results as CSV files. The backend was modularized in Python to ensure smooth inference and quick processing (less than 5 seconds per image).
+
+All project files, including datasets, model scripts, and outputs, are well-documented and maintained on GitHub for transparency and reproducibility.
+
+👩‍💻 Intern: Akkala Shivani Reddy
 🎓 Malla Reddy Engineering College
 🤝 Infosys Springboard Mentor – Praveen
