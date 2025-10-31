@@ -90,9 +90,9 @@ To run this project locally, follow these steps:
 ```
 Dermal_Scan_project/
 ├── main.py               # Main Streamlit application script
-├── best_densenet_model.h5    # Pre-trained Keras model
 ├── requirements.txt          # Python dependencies
 ├── uploads/                  # Directory for user-uploaded images (created at runtime)
 ├── results/                  # Directory for annotated images and CSV logs (created at runtime)
 └── README.md                 # Project documentation
+
 ```
