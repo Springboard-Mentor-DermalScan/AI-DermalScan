@@ -64,8 +64,11 @@ DermalScan/
 │   └── 📄 DermalScan(Deepika).pdf 
 
 ├── 📄 app1.py                     # The main Streamlit application
+
 ├── 📄 Project.ipynb               # Jupyter Notebook used for training
+
 ├── 📄 README.md                   # This file
+
 └── 📄 requirements.txt            # Python dependencies
 
 
