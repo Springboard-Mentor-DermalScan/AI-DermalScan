@@ -51,10 +51,9 @@ DermalScan/
 ├── DermalSkin_MobileNetV2_Finetuned.h5  
 ├── requirements.txt              
 ├── Documents/
-│   ├── Infosys Documentation
-│   
-├
-├                 
+│   ├── Infosys Documentation   
+├── results
+├── uploads
 └── README.md                    
 
 💻 How to Run the Project
@@ -88,7 +87,7 @@ Model Used	MobileNetV2 (Fine-Tuned)
 Input Shape	224 × 224 × 3
 Optimizer	Adam
 Loss Function	Categorical Crossentropy
-Accuracy Achieved	82.07%
+Accuracy Achieved	99.07%
 Predicted Classes	Clear Face, Dark Spots, Puffy Eyes, Wrinkles
 👨‍💻 Developed By
 
