@@ -94,5 +94,6 @@ Predicted Classes	Clear Face, Dark Spots, Puffy Eyes, Wrinkles
 
 Rasool Baig
 🎓 B.Tech – Computer Science & Engineering
+SESHADRI RAO GUDLAVALLERU ENGINEERING COLLEGE
 🏫 Jawaharlal Nehru Technological University, Kakinada (JNTUK)
 🤝 Infosys Springboard Virtual Internship Project – DermalSkin Analyzer
