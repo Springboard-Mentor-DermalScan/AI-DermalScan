@@ -1,0 +1,6 @@
+Face #,Face Type,Confidence,Estimated Age,Estimation Speed,⏱ Total Time,Image Dimensions
+1,clear face,99.8%,18 years, Slow (>5s),5.67 sec,600 × 400 px
+2,clear face,86.8%,30 years, Slow (>5s),5.67 sec,600 × 400 px
+3,clear face,99.5%,22 years, Slow (>5s),5.67 sec,600 × 400 px
+4,wrinkles,50.0%,56 years, Slow (>5s),5.67 sec,600 × 400 px
+5,dark spots,71.9%,38 years, Slow (>5s),5.67 sec,600 × 400 px
