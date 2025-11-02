@@ -5,15 +5,15 @@ This project is an interactive AI-powered web application that uses deep learnin
 The application is built in Python using Streamlit for the web interface and a fine-tuned ResNet50 model (trained with TensorFlow/Keras) for facial skin condition classification. The app automatically detects faces, classifies visible skin signs, estimates approximate age, and provides an intuitive visual and analytical summary.
 
 🌟 Features
-🖼️ File Upload
+1. File Upload
 
 Simple drag-and-drop or file selection for .jpg, .jpeg, and .png images.
 
-👁️ Face Detection
+2.Face Detection
 
 Automatically detects faces in uploaded images using OpenCV’s Haar Cascade Classifier.
 
-🔍 Skin Sign Classification
+3.kin Sign Classification
 
 Analyzes detected faces and provides a percentage breakdown for four categories:
 
@@ -25,11 +25,11 @@ Puffy Eyes
 
 Clear Skin
 
-🎚️ Age Estimation
+4.Age Estimation
 
 Provides an approximate predicted age for each detected face using model-calibrated regression.
 
-📊 Visual Feedback
+5. Visual Feedback
 
 Displays both the original image and the annotated image with:
 
@@ -39,7 +39,7 @@ Predicted age
 
 Confidence percentages for each skin sign
 
-💾 Export Results
+6. Export Results
 
 Download Annotated Image — Save a .png of the processed image with visual labels.
 
