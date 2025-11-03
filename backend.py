@@ -512,7 +512,7 @@ def detect_and_predict(image_path):
         elif predicted_class == "puffy eyes":
             est_age = randint(40, 55)
         else:  # wrinkles
-            est_age = randint(65,75)
+            est_age = randint(68,75)
 
         results.append((predicted_class, confidence, est_age))
 
