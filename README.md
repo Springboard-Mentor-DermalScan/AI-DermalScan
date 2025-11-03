@@ -74,7 +74,7 @@ AI_DermalScan/
 ```bash
 git clone https://github.com/yourusername/AI-DermalScan.git
 cd AI-DermalScan
-
+```
 Step 2️⃣: Create and Activate Virtual Environment
 # Windows
 python -m venv dermalscan_env
@@ -83,16 +83,12 @@ dermalscan_env\Scripts\activate
 # Mac/Linux
 python3 -m venv dermalscan_env
 source dermalscan_env/bin/activate
-
+```
 Step 3️⃣: Install Dependencies
 pip install -r requirements.txt
-
-Step 4️⃣: Run the Streamlit App
+```Step 4️⃣: Run the Streamlit App
 streamlit run app.py
-
-Then open the local URL shown in the terminal (usually http://localhost:8501
-).
-
+```
 Step 5️⃣: Upload an Image
 
 Upload a clear, front-facing JPG/PNG image (≤ 10MB).
@@ -111,25 +107,27 @@ Annotated image preview
 
 Downloadable CSV of results
 
-| **Parameter**           | **Description**                                    |
-| ----------------------- | -------------------------------------------------- |
-| **Model Used**          | DenseNet121 (Fine-tuned)                           |
-| **Face Detector**       | MTCNN                                              |
-| **Input Image Size**    | 224 × 224 × 3                                      |
-| **Optimizer**           | AdamW (Cosine LR Scheduler)                        |
-| **Loss Function**       | Categorical Crossentropy *(Label Smoothing = 0.1)* |
-| **Data Augmentation**   | Flip, Rotation, Brightness, Contrast               |
-| **Validation Accuracy** | ~95%                                               |
-| **Classes**             | wrinkles, darkspots, puffy_eyes, clear_skin        |
-
+ Model Details
+Parameter	         Description
+Model Used	       DenseNet121 (Fine-tuned)
+Face Detector      	MTCNN
+Input Image Size	  224 × 224 × 3
+Optimizer	          AdamW (Cosine LR Scheduler)
+Loss Function	      Categorical Crossentropy (Label Smoothing = 0.1)
+Data Augmentation	  Flip, Rotation, Brightness, Contrast
+Validation Accuracy 	~95%
+Classes            	wrinkles, darkspots, puffy_eyes, clear_skin                                        |
 ⚡ Performance Tips
 
-Use @st.cache_resource to cache model & detector for faster inference.
+Use @st.cache_resource to cache model and detector for faster inference.
 
 Resize images ≤ 1024px before prediction.
 
 For GPU acceleration:
+It is designed purely for research and educational purposes.
+For medical concerns, always consult a certified dermatologist.
 pip install tensorflow[and-cuda]
+
 Convert the model to TFLite for faster web & mobile deployment.
 
 🚀 Future Scope
@@ -158,4 +156,4 @@ For medical concerns, always consult a certified dermatologist.
 
 Shreya Bhat
 B.E. in Computer Science and Engineering
-RNS Institute of Technology, Bengaluru
+💡 Aspiring AI developer passionate about building intelligent systems that make technology more human.
