@@ -86,12 +86,12 @@ Once running, open the local URL displayed in the terminal (usually `http://loca
 
 ## 🧾 requirements.txt
 ```
-streamlit
-tensorflow
-opencv-python
-pandas
-numpy
-Pillow
+streamlit==1.50.0
+tensorflow==2.20.0
+opencv-python==4.12.0
+pandas==2.3.3
+numpy==2.2.6
+Pillow==11.3.0
 ```
 
 ---
