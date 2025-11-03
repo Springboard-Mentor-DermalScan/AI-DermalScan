@@ -51,6 +51,7 @@ The Streamlit frontend will automatically load this file at startup.
 ---
 
 ## 📁 Project Structure
+```
 
 AI_DermalScan/
 │
@@ -65,6 +66,7 @@ AI_DermalScan/
 ├── requirements.txt # Dependencies
 └── README.md # Project guide (this file)
 
+```
 
 ---
 
@@ -79,6 +81,7 @@ Step 2️⃣: Create and Activate Virtual Environment
 # Windows
 python -m venv dermalscan_env
 dermalscan_env\Scripts\activate
+```
 
 # Mac/Linux
 python3 -m venv dermalscan_env
