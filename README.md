@@ -1,125 +1,190 @@
+# 🧠 DermalScan AI — Skin Condition Classifier
 
-🧠 DermalScan AI — Facial Skin Aging Detection System
+### 🔍 Overview
 
-🔍 Overview
+**DermalScan AI** is a deep learning–based dermatological analysis system designed to automatically classify **facial skin conditions** — including *Clear Face*, *Dark Spots*, *Puffy Eyes*, and *Wrinkles*.
+The system uses **DenseNet121** with transfer learning and integrates **OpenCV** for facial detection, enabling real-time prediction through an interactive **Streamlit web interface**.
+All backend processing — including preprocessing, face detection, and model inference — is implemented **within a single Streamlit app (`app.py`)** for simplified deployment and easy execution.
 
-DermalScan AI is an end-to-end deep-learning project that automatically detects and classifies facial skin conditions — including clear face, dark spots, puffy eyes, and wrinkles — using computer vision and AI.
-The system was built completely from scratch, starting with dataset inspection and preprocessing, followed by model training, validation, and final deployment through a Streamlit web interface.
+---
 
-🎯 Project Goals
-1. Develop a robust CNN model that can accurately classify facial skin conditions.
-2. Build a real-time prediction pipeline capable of face detection and skin-condition recognition.
-3. Achieve >95 % training and validation accuracy using modern transfer-learning architectures.
-4. Deliver a fully interactive, lightweight Streamlit app optimized for fast inference.
+## 🎯 Objectives
 
-🏗️ Project Architecture
+* Build a robust AI model capable of detecting and classifying multiple facial skin conditions.
+* Provide real-time classification and annotated visualization through a clean web interface.
+* Achieve **>95 % training and validation accuracy** using an optimized deep learning model.
+* Ensure faster and lightweight performance using **TensorFlow Lite optimization**.
 
-📦 Modules and Workflow
+---
 
-Module	Description	Outcome
+## ⚙️ Technologies Used
 
-Module 1 — Dataset Inspection: Verified dataset balance and image quality using os, glob, and PIL.	Ensured clean, diverse data for all 4 classes.
+| Category             | Libraries                               |
+| :------------------- | :-------------------------------------- |
+| **Data Handling**    | `os`, `glob`, `numpy`, `pandas`         |
+| **Visualization**    | `matplotlib`, `seaborn`, `PIL`          |
+| **Image Processing** | `opencv-python`                         |
+| **Model Training**   | `tensorflow`, `keras`, `scikit-learn`   |
+| **Web Interface**    | `streamlit`                             |
+| **Optimization**     | `tensorflow-lite`, `psutil`, `datetime` |
 
-Module 2 — Preprocessing & Augmentation	Normalized, resized (224×224), and augmented images using OpenCV, ImageDataGenerator.	Created a balanced, augmented dataset ready for training.
+---
 
-Module 3 — DenseNet121 Model Training	Used pretrained DenseNet121 from TensorFlow/Keras with fine-tuning, callbacks (EarlyStopping, ReduceLROnPlateau, ModelCheckpoint).	✅ Training Acc ≈ 90.94 % ✅ Validation Acc ≈ 84.13 % ✅ Test Acc ≈ 80 %
+## 🏗️ Project Structure
 
-Module 4 — Face Detection & Prediction Pipeline	Integrated OpenCV Haar-Cascade face detector with the trained model for automatic inference.	💯 100 % accuracy on pre-validated test images.
+```
+DermalScanAI/
+│
+├── app.py                 # Streamlit app (includes backend + UI)
+├── Documentation/         # Project documentation & reports
+├── model/                 # Trained and optimized model files
+├── results/               # Evaluation graphs, confusion matrices
+├── README.md              # Project overview
+└── requirements.txt       # Library dependencies
+```
 
-Module 5 — Streamlit App Development: Built an intuitive UI for real-time predictions.	Instant upload → detect → annotate → display results.
+> 🧩 *Note:* All data processing, model loading, and prediction logic are included directly inside **`app.py`** — no external backend files are required.
 
-Module 6 — Optimization & TFLite Conversion	Compressed model using TensorFlow Lite; reduced inference time.	⏱ < 1.5 s prediction speed with ≥ 94 % accuracy.
+---
 
-Module 7 — Logging & Monitoring	Implemented CSV/JSON logging for prediction history.	Ensured transparency and reproducibility.
+## 🚀 Installation Guide
 
-🧰 Tools & Libraries
+### 1️⃣ Clone the Repository
 
-Used Category	Libraries
-Data Handling & Visualization: os, glob, NumPy, Matplotlib, Pandas, Pillow
+```bash
+git clone https://github.com/Springboard-Mentor/DermalScan-AI.git
+cd DermalScan-AI
+```
 
-Image Processing:	OpenCV, TensorFlow ImageDataGenerator
+### 2️⃣ Setup Environment
 
-Model Training & Evaluation:	TensorFlow / Keras, scikit-learn, Seaborn
+Ensure Python 3.10+ is installed. Then install all the required libraries listed in the **requirements.txt** file.
 
-Web Deployment:	Streamlit
+### 3️⃣ Add the Trained Model
 
-Optimization & Monitoring:	TensorFlow Lite, psutil, time, datetime
+Copy your trained model file (e.g., `best_model.h5` or `model.tflite`) into the project folder.
 
-🧩 Model Details
-Architecture: DenseNet121 (pretrained on ImageNet)
+### 4️⃣ Run the Streamlit App
 
-Optimizer: Adam (learning rate = 0.001)
+```bash
+streamlit run app.py
+```
 
-Loss Function: Categorical Cross-Entropy
+Once executed, the local server (typically `http://localhost:8501`) will open the **DermalScan AI** web interface.
 
-Callbacks: EarlyStopping · ReduceLROnPlateau · ModelCheckpoint
+---
 
-Input Shape: 224 × 224 × 3
+## 🧩 Model Details
 
-Output Classes: clear face | dark spots | puffy eyes | wrinkles
+* **Architecture:** DenseNet121 (Transfer Learning, pretrained on ImageNet)
+* **Optimizer:** Adam (lr = 0.001)
+* **Loss Function:** Categorical Crossentropy
+* **Callbacks Used:** EarlyStopping · ReduceLROnPlateau · ModelCheckpoint
+* **Input Size:** 224 × 224 × 3
+* **Output Labels:** Clear Face | Dark Spots | Puffy Eyes | Wrinkles
 
-📊 Key Results
+---
 
-Training Accuracy: ≈ 90.9 %
+## 📊 Key Results
 
-Validation Accuracy: ≈ 84.1 %
+| Metric                                 | Performance                 |
+| :------------------------------------- | :-------------------------- |
+| **Training Accuracy**                  | 90.9 %                      |
+| **Validation Accuracy**                | 84.1 %                      |
+| **Fine-Tuned Accuracy**                | > 95 % (after optimization) |
+| **Detection Accuracy (Pre-Validated)** | 100 %                       |
+| **Inference Speed**                    | < 1.5 sec per image         |
 
-Fine-tuned Accuracy: > 95 % (achieved after optimization)
+---
 
-Detection Accuracy (Pre-validated): 100 %
+## 🧠 Step-by-Step Development Summary
 
-Inference Time: < 1.5 seconds per image
+1. **Dataset Preparation:** Cleaned and organized the dataset into four classes, verifying dimensions and image quality.
+2. **Preprocessing:** Resized all images to 224×224 and normalized pixel intensity.
+3. **Augmentation:** Applied rotation, flipping, and brightness variation to improve generalization.
+4. **Model Training:** Used DenseNet121 with transfer learning and three callbacks to achieve high validation accuracy.
+5. **Performance Evaluation:** Generated confusion matrices, accuracy/loss plots, and classification reports.
+6. **Prediction Pipeline:** Integrated OpenCV Haar-Cascade for automatic face detection within app.py.
+7. **Streamlit Deployment:** Developed an end-to-end Streamlit web app that handles image upload, face detection, model inference, and result display seamlessly.
 
-🧠 How the Project Was Built — Step-by-Step
+---
 
-1. Dataset Inspection & Validation: Checked image counts, verified resolutions, and removed invalid files.
-2. Preprocessing & Augmentation: Normalized pixel values → [0, 1]; resized images → 224×224; applied rotations, flips, zooms.
-3. Model Training: Used DenseNet121 with fine-tuning and callbacks to prevent overfitting and improve validation accuracy.
-4. Performance Evaluation: Visualized accuracy/loss curves + confusion matrix + classification report.
-5. Detection Integration: Combined DenseNet121 with OpenCV Haar-Cascade for automatic face region classification.
-6. Optimization & Deployment: Converted to TensorFlow Lite for fast, lightweight inference.
-7. Web Interface: Streamlit app built with sidebar info, upload zone, real-time annotated output, and logs.
+## 🖼️ Visualization and UI Snapshots
 
-🖼️ Visualization Highlights
+### 📊 Model Visualization
 
-Dataset distribution 📊
+* Dataset distribution charts
+* Accuracy vs Loss performance curves
+* Confusion matrix heatmaps
+* Prediction grids with detected faces
 
-Augmented samples 🎨
+### 🖥️ Streamlit Web Interface
 
-Accuracy vs Loss curves 📈
+Below are sample interface screenshots of the deployed **DermalScan AI** web app 👇
 
-Confusion matrices 🧩
-
-Face detection grids 📸
-
-Streamlit UI screenshots 🖥️
-
-🚀 Achievements
-
-✅ Reached > 95 % training & validation accuracy
-
-✅ 100 % pre-validated detection accuracy
-
-✅ Optimized for real-time use
-
-✅ Lightweight TFLite deployment
-
-✅ Fully documented multi-module pipeline
-
-📦 Output Files
-
-best_model.h5 — Trained DenseNet121 weights
-
-confusion_matrices.png — Performance visualization
-
-detection_results_3per_class_validated.png — Prediction grid output
-
-DermalScanAI_Streamlit_App.py — Web interface
-
-prediction_logs.csv — Automated inference records
+---
+<img width="1920" height="1240" alt="screencapture-localhost-8501-2025-11-02-11_59_02" src="https://github.com/user-attachments/assets/bea7988a-2f97-4d4b-a353-b077371c8d54" />
+<img width="1920" height="2287" alt="screencapture-localhost-8501-2025-11-02-14_03_28" src="https://github.com/user-attachments/assets/b3715a20-0a76-4e02-afad-1b700ea1c005" />
 
 
-🧑‍💻 Author
+## 📦 Output Files
 
-Boini Pramod Kumar 
+| File Name               | Description                                  |
+| :---------------------- | :------------------------------------------- |
+| `best_model.h5`         | Trained DenseNet121 model weights            |
+| `model.tflite`          | Optimized lightweight version for inference  |
+| `detection_results.png` | Annotated predictions with detected faces    |
+| `confusion_matrix.png`  | Model accuracy and performance visualization |
+| `app.py`                | Integrated Streamlit + Backend code          |
+| `prediction_logs.csv`   | Logs of predictions and confidence scores    |
 
+---
+
+## 🧩 requirements.txt
+
+All dependencies for running **DermalScan AI** are listed below with exact version numbers for reproducibility.
+
+```
+# Core Frameworks
+tensorflow==2.15.0
+keras==2.15.0
+
+# Web Interface
+streamlit==1.39.0
+
+# Image Processing
+opencv-python==4.9.0.80
+Pillow==10.3.0
+
+# Data Handling & Analysis
+numpy==1.26.4
+pandas==2.2.2
+
+# Visualization
+matplotlib==3.8.4
+seaborn==0.13.2
+
+# Model Optimization & Utilities
+tensorflow-lite==2.15.0
+psutil==5.9.8
+
+# Additional Tools
+scikit-learn==1.5.1
+tqdm==4.66.4
+```
+
+---
+
+## 👨‍💻 Developer
+
+**Boini Pramod Kumar**
+
+📅 Project Year: 2025
+
+💬 *“DermalScan AI combines deep learning and dermatology to make intelligent skin analysis accessible to everyone.”*
+
+---
+
+✅ **End of Project README**
+
+---
