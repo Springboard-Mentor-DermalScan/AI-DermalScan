@@ -93,6 +93,18 @@ pandas==2.3.3
 numpy==2.2.6
 Pillow==11.3.0
 ```
+---
+## 📸 Project Output
+
+Below are the sample outputs of the **DermalScan – AI Facial Aging Detection System**, showcasing annotated detection results and interface views.
+
+<table>
+<tr>
+<td><img src="2025-11-04 (2).png" alt="Output 1" width="300"/></td>
+<td><img src="2025-11-04 (4).png" alt="Output 2" width="300"/></td>
+<td><img src="2025-11-04 (6).png" alt="Output 3" width="300"/></td>
+</tr>
+</table>
 
 ---
 
