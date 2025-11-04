@@ -1,0 +1,9 @@
+x,y,width,height,Condition,Confidence (%),Estimated Age,Prediction Time (s)
+9,379,201,201,puffy eyes,40.82,44,5.72
+569,380,115,115,clear face,65.35,21,5.72
+835,400,126,126,puffy eyes,74.21,44,5.72
+325,391,159,159,clear face,75.34,19,5.72
+763,79,172,172,puffy eyes,74.65,42,5.72
+447,60,268,268,clear face,64.52,20,5.72
+30,78,215,215,clear face,47.9,23,5.72
+219,135,83,83,clear face,50.83,21,5.72
