@@ -15,17 +15,22 @@ uploaded_file = st.file_uploader("📤 Upload a facial image", type=["jpg", "jpe
 
 if uploaded_file:
     col1, col2 = st.columns(2)
+
     with col1:
         st.image(uploaded_file, caption="Uploaded Image", use_container_width=True)
 
     with st.spinner("⏳ Analyzing image... Please wait"):
         image_bytes = uploaded_file.read()
-        annotated_path, csv_path, results_df = predict_aging_signs(image_bytes)
+        annotated_path, csv_path, results_df, prediction_time = predict_aging_signs(image_bytes)
 
     with col2:
         st.image(annotated_path, caption="🔍 Annotated Results", use_container_width=True)
         st.dataframe(results_df, use_container_width=True)
 
+        # Display prediction time
+        st.success(f"✅ Prediction completed in **{prediction_time} seconds**")
+
+        # Download buttons
         st.download_button("⬇️ Download Annotated Image", open(annotated_path, "rb"), file_name="annotated_result.jpg")
         st.download_button("⬇️ Download Predictions CSV", open(csv_path, "rb"), file_name="predictions_log.csv")
 
