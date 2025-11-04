@@ -97,14 +97,11 @@ Pillow==11.3.0
 ## 📸 Project Output
 
 Below are the sample outputs of the **DermalScan – AI Facial Aging Detection System**, showcasing annotated detection results and interface views.
-
-<table>
-<tr>
-<td><img src="outputs/2025-11-04 (2).png" width="300"/></td>
-<td><img src="outputs/2025-11-04 (4).png" width="300"/></td>
-<td><img src="outputs/2025-11-04 (6).png" width="300"/></td>
-</tr>
-</table>
+<div>
+<img src="outputs/2025-11-04 (2).png" width="300"/><br>
+<img src="outputs/2025-11-04 (4).png" width="300"/><br>
+<img src="outputs/2025-11-04 (6).png" width="300"/><br>
+</div>
 
 ---
 
