@@ -1,8 +1,8 @@
-# backend.py
 import os
 import cv2
 import numpy as np
 import pandas as pd
+import time
 from random import randint
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import img_to_array
@@ -17,6 +17,7 @@ HAAR_PATH = cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
 
 # Cache model and cascade
 _model, _face_cascade = None, None
+
 
 def load_inception_model():
     global _model
@@ -42,13 +43,17 @@ def load_inception_model():
         _model.load_weights(MODEL_PATH)
     return _model
 
+
 def load_face_cascade():
     global _face_cascade
     if _face_cascade is None:
         _face_cascade = cv2.CascadeClassifier(HAAR_PATH)
     return _face_cascade
 
+
 def predict_aging_signs(image_bytes):
+    start_time = time.time()  # ⏱ Start measuring prediction time
+
     model = load_inception_model()
     face_cascade = load_face_cascade()
 
@@ -78,24 +83,26 @@ def predict_aging_signs(image_bytes):
         condition = class_names[pred_idx]
 
         # Predict age range
-        if condition == 'clear face': est_age = randint(18, 30)
-        elif condition == 'darkspots': est_age = randint(30, 40)
-        elif condition == 'puffy eyes': est_age = randint(40, 55)
-        else: est_age = randint(56, 75)
+        if condition == 'clear face':
+            est_age = randint(18, 30)
+        elif condition == 'darkspots':
+            est_age = randint(30, 40)
+        elif condition == 'puffy eyes':
+            est_age = randint(40, 55)
+        else:
+            est_age = randint(56, 75)
 
         label = f"{condition} ({conf:.2f}%) | Age: {est_age}"
 
         # Draw bounding box
         cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
-        
+
         # Determine label size and adjust position
         (label_width, label_height), baseline = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.6, 2)
         text_y = y - 10 if y - 10 > label_height else y + h + label_height + 10
-        
-        # Make sure text doesn’t go outside image
         if text_y + label_height > img.shape[0]:
             text_y = y - 10
-        
+
         # Add background rectangle for better readability
         cv2.rectangle(
             img,
@@ -104,10 +111,9 @@ def predict_aging_signs(image_bytes):
             (0, 255, 0),
             cv2.FILLED
         )
-        
-        # Put label text on the rectangle
-        cv2.putText(img, label, (x, text_y), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 0, 0), 2)
 
+        # Put label text
+        cv2.putText(img, label, (x, text_y), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 0, 0), 2)
 
         results.append({
             "x": x, "y": y, "width": w, "height": h,
@@ -116,10 +122,19 @@ def predict_aging_signs(image_bytes):
             "Estimated Age": est_age
         })
 
+    # Measure total prediction time
+    prediction_time = round(time.time() - start_time, 2)
+
+    # Save annotated image
     annotated_path = "annotated_result.jpg"
     cv2.imwrite(annotated_path, img)
+
+    # Create results DataFrame with prediction time
     results_df = pd.DataFrame(results)
+    results_df["Prediction Time (s)"] = prediction_time
+
+    # Save to CSV
     csv_path = "predictions_log.csv"
     results_df.to_csv(csv_path, index=False)
 
-    return annotated_path, csv_path, results_df
+    return annotated_path, csv_path, results_df, prediction_time
