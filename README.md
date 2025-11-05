@@ -73,17 +73,6 @@ cd DermalScan-AI
 2️⃣ Install Dependencies
 pip install -r requirements.txt
 
-3️⃣ Add Your Model
-
-Place your trained MobileNetV2 model file in the project directory:
-
-C:\MACHINE LEARNING\Desktop\AI_DERMAL_SCAN\dermal_model.h5
-
-
-Or rename it to:
-
-model.h5
-
 4️⃣ Run the Application
 streamlit run app.py
 
