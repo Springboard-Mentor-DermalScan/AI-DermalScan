@@ -1,0 +1,34 @@
+# -------------------------------
+# DermalScan AI - Skin Analysis App
+# Compatible with TensorFlow 2.16+ and Streamlit 1.38+
+# -------------------------------
+
+# Core
+numpy>=1.26.0
+pandas>=2.2.2
+matplotlib>=3.8.4
+seaborn>=0.13.2
+plotly>=5.22.0
+opencv-python>=4.10.0.84
+pillow>=10.3.0
+urllib3>=2.2.2
+
+# Streamlit UI
+streamlit>=1.38.0
+
+# Machine Learning
+tensorflow>=2.16.1
+scikit-learn>=1.5.0
+
+# Utilities
+h5py>=3.11.0
+protobuf>=4.25.3
+
+# For model saving/loading
+keras>=3.3.3
+
+# Optional (to avoid warnings)
+requests>=2.32.3
+
+# To avoid display issues on some systems
+packaging>=24.0
