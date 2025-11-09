@@ -34,6 +34,15 @@ An intuitive **Streamlit-based web interface** that enables:
 
 ---
 
+##  Project Website Preview
+
+Here’s how the **DermalScan web interface** looks during facial analysis:
+
+![DermalScan Web App Interface](screenshots/website_demo.png)
+
+
+
+
 ##  Tech Stack
 
 | Area | Tools / Libraries |
