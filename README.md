@@ -55,10 +55,27 @@ git clone https://github.com/Springboard-Mentor-DermalScan/AI-DermalScan.git
 cd AI-DermalScan
 ###  2️. Install Dependencies
 pip install -r requirement.txt
-### 3️. Run the Application
+### 3.Generate the model
+
+First, run the Jupyter Notebook file:
+
+DermalScan_AI_Facial_Skining_Detection_App.ipynb
+
+
+This will train and generate the model file named final_densenet_model.h5.
+
+### 4.Add model to backend
+
+Then, update backend.py to load it using the correct path:
+
+model = load_model("final_densenet_model.h5")
+
+
+### 5.Run the application
+
 streamlit run app.py
 
-### 4️. Upload & Analyze
+### 6. Upload & Analyze
 
 - Upload a facial image (.jpg / .png).
 
