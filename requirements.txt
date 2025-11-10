@@ -1,0 +1,26 @@
+# Core Frameworks
+tensorflow==2.15.0
+keras==2.15.0
+
+# Web Interface
+streamlit==1.39.0
+
+# Image Processing
+opencv-python==4.9.0.80
+Pillow==10.3.0
+
+# Data Handling & Analysis
+numpy==1.26.4
+pandas==2.2.2
+
+# Visualization
+matplotlib==3.8.4
+seaborn==0.13.2
+
+# Model Optimization & Utilities
+tensorflow-lite==2.15.0
+psutil==5.9.8
+
+# Additional Tools
+scikit-learn==1.5.1
+tqdm==4.66.4
