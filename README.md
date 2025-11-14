@@ -42,4 +42,13 @@ Computer Vision,"OpenCV, Haar Cascade","Face detection, image preprocessing, and
 Data Handling,"Pandas, NumPy","Handling data augmentations, result logging, and CSV export."
 Backend,Python (Modularized),Ensures robust and quick (under 5 seconds) inference execution.
 
+    Installation and Run
+
+Clone the Repository:
+git clone https://github.com/Springboard-Mentor-DermalScan/AI-DermalScan.git
+cd AI-DermalScan
+
+Install Dependencies:
+pip install -r requirement.txt
+
  👩Intern: Vennu Bhavana🎓 Vijaya Institute of technology for women 🤝 Infosys Springboard Mentor – Praveen
