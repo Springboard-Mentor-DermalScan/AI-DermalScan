@@ -1,123 +1,235 @@
 import os
-import numpy as np
-import tensorflow as tf
-from tensorflow.keras.models import load_model
-import cv2
 import time
-from mtcnn import MTCNN
-from random import randint
-MODEL_PATH = os.environ.get("MODEL_PATH", "DermalSkin_MobileNetV2_Finetuned.h5")
-os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
-tf.get_logger().setLevel("ERROR")
-print(" Loading MobileNetV2 model...")
-@tf.keras.utils.register_keras_serializable()
-class FixedDepthwiseConv2D(tf.keras.layers.DepthwiseConv2D):
-    def __init__(self, *args, **kwargs):
-        kwargs.pop("groups", None)
-        super().__init__(*args, **kwargs)
-@tf.keras.utils.register_keras_serializable()
-def load_model_once():
-    try:
-        return load_model(MODEL_PATH, compile=False)
-    except TypeError:
-        print(" Compatibility fix applied...")
-        custom_objects = {"DepthwiseConv2D": FixedDepthwiseConv2D}
-        return load_model(MODEL_PATH, compile=False, custom_objects=custom_objects)
+import json
+import shutil
+import cv2
+import numpy as np
+import pandas as pd
+from tensorflow.keras.models import load_model
 
-model = load_model_once()
-print(" Model loaded successfully!")
-face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
-detector = MTCNN()
-def enhance_image(img):
-    """
-    Gentle, natural enhancement for skin — avoids oily/glossy look.
-    """
-    # Convert to LAB color space for better lightness control
-    lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
-    l, a, b = cv2.split(lab)
-    clahe = cv2.createCLAHE(clipLimit=1.2, tileGridSize=(8, 8))
-    cl = clahe.apply(l)
-    limg = cv2.merge((cl, a, b))
-    enhanced_img = cv2.cvtColor(limg, cv2.COLOR_LAB2BGR)
-    enhanced_img = cv2.bilateralFilter(enhanced_img, d=5, sigmaColor=50, sigmaSpace=50)
-    enhanced_img = cv2.convertScaleAbs(enhanced_img, alpha=1.0, beta=-10)
-    return enhanced_img
-def predict_skin_condition(img_path):
-    start_time = time.time()
-    if not os.path.exists(img_path):
-        raise FileNotFoundError(f" Image not found: {img_path}")
-    img = cv2.imread(img_path)
-    if img is None:
-        raise ValueError(" Unable to read image file.")
-    img = enhance_image(img)
-    rgb_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    mtcnn_results = detector.detect_faces(rgb_img)
-    faces = [(r['box'][0], r['box'][1], r['box'][2], r['box'][3]) for r in mtcnn_results]
-    if not faces:
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        faces = face_cascade.detectMultiScale(gray, 1.1, 5, minSize=(60, 60))
-    if not faces:
-        return {
-            "results": [],
-            "annotated_image": img_path,
-            "total_time": 0,
-            "estimation": " No face detected"
-        }
-    results = []
-    class_labels = ["clear face", "dark spots", "puffy eyes", "wrinkles"]
-    for (x, y, w, h) in faces:
-        x, y = max(0, x), max(0, y)
-        pad = int(0.1 * w)
-        x1, y1 = max(0, x - pad), max(0, y - pad)
-        x2, y2 = min(img.shape[1], x + w + pad), min(img.shape[0], y + h + pad)
-        face_crop = img[y1:y2, x1:x2]
-        if face_crop.size == 0:
-            continue
-        face_resized = cv2.resize(face_crop, (224, 224), interpolation=cv2.INTER_AREA)
-        face_array = np.expand_dims(face_resized / 255.0, axis=0)
-        preds = model.predict(face_array, verbose=0)
-        predicted_class_index = int(np.argmax(preds[0]))
-        confidence = float(np.max(preds[0]) * 100)
-        predicted_label = class_labels[predicted_class_index]
-        if predicted_label == "oily face":
-            predicted_label = "normal face"
-        if predicted_label in ["clear face", "normal face"]:
-            age_estimated = randint(18, 30)
-        elif predicted_label == "dark spots":
-            age_estimated = randint(30, 40)
-        elif predicted_label == "puffy eyes":
-            age_estimated = randint(40, 55)
+# ------------ CONFIG ------------
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODELS_DIR = os.path.join(BASE_DIR, "models")
+OUTPUTS_DIR = os.path.join(BASE_DIR, "outputs")
+os.makedirs(OUTPUTS_DIR, exist_ok=True)
+
+H5_NAME = "DermalSkin_MobileNetV2_Finetuned.h5"
+MODEL_PATH = os.path.join(MODELS_DIR, H5_NAME)
+
+FACE_PROTO = os.path.join(MODELS_DIR, "deploy.prototxt")
+FACE_MODEL = os.path.join(MODELS_DIR, "res10_300x300_ssd_iter_140000.caffemodel")
+
+LOG_CSV = os.path.join(OUTPUTS_DIR, "predictions_log.csv")
+
+CLASS_LABELS = ['clear_face', 'dark_spots', 'puffy_eyes', 'wrinkles']  
+
+# ------------ UTILITIES ------------
+def _load_keras_model_safe(path):
+    """Load Keras .h5 with compatibility for older DepthwiseConv2D that had 'groups' kwarg."""
+    if not os.path.exists(path):
+        raise FileNotFoundError(f"Model file not found at {path}. Place the .h5 in models/ folder.")
+    try:
+        m = load_model(path, compile=False)
+        return m
+    except TypeError as e:
+        msg = str(e)
+        if "DepthwiseConv2D" in msg and "groups" in msg:
+            from tensorflow.keras.layers import DepthwiseConv2D as KDepthwise
+            class DepthwiseConv2DFix(KDepthwise):
+                def __init__(self, *args, **kwargs):
+                    kwargs.pop("groups", None)
+                    super().__init__(*args, **kwargs)
+            from tensorflow.keras import utils
+            utils.get_custom_objects()["DepthwiseConv2D"] = DepthwiseConv2DFix
+            m = load_model(path, compile=False)
+            return m
         else:
-            age_estimated = randint(55, 70)
-        cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 3)
-        label_text = f"{predicted_label} ({confidence:.1f}%)"
-        age_text = f"Age: {age_estimated} years"
-        text_y = max(y1 - 10, 30)
-        overlay = img.copy()
-        text_bg_width = max(220, len(label_text) * 12)
-        cv2.rectangle(overlay, (x1, text_y - 40), (x1 + text_bg_width, text_y - 5), (0, 0, 0), -1)
-        img = cv2.addWeighted(overlay, 0.4, img, 0.6, 0)
-        cv2.putText(img, label_text, (x1 + 10, text_y - 20),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.45, (255, 255, 255), 1, cv2.LINE_AA)
-        cv2.putText(img, age_text, (x1 + 10, text_y - 5),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.45, (200, 255, 200), 1, cv2.LINE_AA)
-        results.append({
-            "x": int(x1),
-            "y": int(y1),
-            "w": int(x2 - x1),
-            "h": int(y2 - y1),
-            "Predicted Label": predicted_label,
-            "Confidence (%)": round(confidence, 2),
-            "Estimated Age": age_estimated
-        })
-    annotated_path = "annotated_output_clear.jpg"
-    img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    cv2.imwrite(annotated_path, cv2.cvtColor(img_rgb, cv2.COLOR_RGB2BGR), [cv2.IMWRITE_JPEG_QUALITY, 95])
-    total_time = round(time.time() - start_time, 2)
-    estimation = " Fast (≤5s)" if total_time <= 5 else " Slow (>5s)"
-    return {
-        "results": results,
-        "annotated_image": annotated_path,
-        "total_time": total_time,
-        "estimation": estimation
+            raise
+
+MODEL = _load_keras_model_safe(MODEL_PATH)
+
+# Face detector
+if not os.path.exists(FACE_PROTO) or not os.path.exists(FACE_MODEL):
+    raise FileNotFoundError("Face detector files missing in models/. Add deploy.prototxt and res10_300x300_ssd_iter_140000.caffemodel")
+
+FACE_NET = cv2.dnn.readNetFromCaffe(FACE_PROTO, FACE_MODEL)
+
+# ------------ Small helpers ------------
+def _resize_for_detection(img_bgr, max_dim=800):
+    h, w = img_bgr.shape[:2]
+    if max(h, w) <= max_dim:
+        return img_bgr, 1.0
+    scale = max_dim / float(max(h, w))
+    return cv2.resize(img_bgr, (int(w*scale), int(h*scale)), interpolation=cv2.INTER_AREA), scale
+
+def _variance_of_laplacian(gray):
+    return cv2.Laplacian(gray, cv2.CV_64F).var()
+
+def _assess_blur(img_bgr):
+    gray = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2GRAY)
+    var = _variance_of_laplacian(gray)
+    if var < 100:
+        label = "very_blurry"
+    elif var < 180:
+        label = "slightly_blurry"
+    else:
+        label = "sharp"
+    return label, round(float(var), 2)
+
+def _estimate_skin_tone(face_rgb):
+    ycrcb = cv2.cvtColor(face_rgb, cv2.COLOR_RGB2YCrCb)
+    meanY = float(np.mean(ycrcb[:, :, 0]))
+    if meanY >= 140:
+        return "fair"
+    elif meanY >= 100:
+        return "medium"
+    else:
+        return "dark"
+
+def _color_for_label(label):
+    mapping = {
+        "clear_face": (50, 205, 50),
+        "dark_spots": (0, 140, 255),
+        "puffy_eyes": (255, 0, 255),
+        "wrinkles": (200, 200, 0)
     }
+    return mapping.get(label, (0, 200, 0))
+
+# ------------ MAIN API ------------
+def detect_predict_image(input_path, target_size=(224,224), conf_threshold=0.5, max_detect_dim=800):
+    start_all = time.time()
+    if not os.path.exists(input_path):
+        raise FileNotFoundError(f"Image not found: {input_path}")
+
+    img_bgr = cv2.imread(input_path)
+    if img_bgr is None:
+        raise ValueError("Unable to read image (cv2.imread returned None)")
+
+    blur_label, blur_score = _assess_blur(img_bgr)
+    img_small, scale = _resize_for_detection(img_bgr, max_dim=max_detect_dim)
+    h_small, w_small = img_small.shape[:2]
+
+    blob = cv2.dnn.blobFromImage(cv2.resize(img_small, (300,300)), 1.0, (300,300), (104.0,177.0,123.0))
+    FACE_NET.setInput(blob)
+    detections = FACE_NET.forward()
+
+    img_rgb = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB)
+    results = []
+    face_idx = 0
+
+    for i in range(detections.shape[2]):
+        conf = float(detections[0,0,i,2])
+        if conf < conf_threshold:
+            continue
+
+        rx1 = int(detections[0,0,i,3] * w_small)
+        ry1 = int(detections[0,0,i,4] * h_small)
+        rx2 = int(detections[0,0,i,5] * w_small)
+        ry2 = int(detections[0,0,i,6] * h_small)
+
+        x1, y1 = max(0,int(rx1/scale)), max(0,int(ry1/scale))
+        x2, y2 = min(img_bgr.shape[1]-1,int(rx2/scale)), min(img_bgr.shape[0]-1,int(ry2/scale))
+        if x2 <= x1 or y2 <= y1:
+            continue
+
+        face_idx += 1
+        face_crop_bgr = img_bgr[y1:y2, x1:x2]
+        if face_crop_bgr.size == 0:
+            continue
+        face_rgb = cv2.cvtColor(face_crop_bgr, cv2.COLOR_BGR2RGB)
+        skin_tone = _estimate_skin_tone(face_rgb)
+
+        # preprocess for model
+        face_resized = cv2.resize(face_rgb, target_size)
+        face_input = np.expand_dims(face_resized.astype("float32")/255.0, axis=0)
+        preds = MODEL.predict(face_input, verbose=0)[0]
+        idx = int(np.argmax(preds))
+        label = CLASS_LABELS[idx] if idx < len(CLASS_LABELS) else str(idx)
+        conf_pct = float(preds[idx]*100.0)
+
+        # deterministic-ish age estimate
+        if label == "clear_face":
+            est_age = int(18 + (1 - conf_pct/100.0)*7)
+        elif label == "dark_spots":
+            est_age = int(30 + (1 - conf_pct/100.0)*7)
+        elif label == "puffy_eyes":
+            est_age = int(40 + (1 - conf_pct/100.0)*10)
+        else:
+            est_age = int(55 + (1 - conf_pct/100.0)*10)
+
+        color = _color_for_label(label)
+        thickness = max(1, int(img_bgr.shape[1]/400))
+        cv2.rectangle(img_rgb, (x1,y1),(x2,y2), color, thickness)
+
+        # ✅ fix putText error: force strings
+        label_lines = [
+            str(label).replace("_"," ").title(),
+            f"{conf_pct:.1f}% Age:{int(est_age)} Tone:{str(skin_tone)}"
+        ]
+        font = cv2.FONT_HERSHEY_SIMPLEX
+        font_scale = max(0.45, img_bgr.shape[1]/1600.0)
+        t = max(1,int(img_bgr.shape[1]/800))
+        heights = [cv2.getTextSize(str(ln), font, font_scale, t)[0][1] for ln in label_lines]
+        widths  = [cv2.getTextSize(str(ln), font, font_scale, t)[0][0] for ln in label_lines]
+        box_w = max(widths)+8
+        box_h = sum(heights)+6
+        tx = x1
+        ty = max(0, y1-box_h-6)
+        cv2.rectangle(img_rgb, (tx,ty),(tx+box_w, ty+box_h), (255,255,224), -1)
+        y_text = ty+heights[0]
+        for ln in label_lines:
+            cv2.putText(img_rgb, str(ln), (tx+4, y_text), font, font_scale, (0,0,0), t, lineType=cv2.LINE_AA)
+            y_text += int(heights[0]*0.9)+2
+
+        results.append({
+            "Face #": face_idx,
+            "Predicted Class": label,
+            "Confidence (%)": round(conf_pct,2),
+            "Estimated Age": int(est_age),
+            "Skin Tone": skin_tone,
+            "Blur Score": blur_score,
+            "X": x1, "Y": y1, "W": x2-x1, "H": y2-y1
+        })
+
+    # Save annotated
+    annotated_path = os.path.join(OUTPUTS_DIR, f"annotated_{os.path.basename(input_path)}")
+    cv2.imwrite(annotated_path, cv2.cvtColor(img_rgb, cv2.COLOR_RGB2BGR))
+
+    # DataFrame
+    if results:
+        df = pd.DataFrame(results)
+    else:
+        df = pd.DataFrame([{
+            "Face #": 0, "Predicted Class":"No face", "Confidence (%)":0.0,
+            "Estimated Age":0,"Skin Tone":"-","Blur Score":blur_score,
+            "X":"-","Y":"-","W":"-","H":"-"
+        }])
+
+    df.insert(0, "Timestamp", pd.Timestamp.now().strftime("%Y-%m-%d %H:%M:%S"))
+    df.insert(1, "Image", os.path.basename(input_path))
+    total_time = round(time.time()-start_all,3)
+    df["Total Time (s)"] = total_time
+
+    # CSV log
+    if not os.path.exists(LOG_CSV):
+        df.to_csv(LOG_CSV,index=False)
+    else:
+        df.to_csv(LOG_CSV, mode="a", header=False, index=False)
+
+    return annotated_path, df, total_time
+
+# ------------ Export helper (zip) ------------
+def export_results_zip(input_image_path, annotated_path, df_row):
+    timestamp = pd.Timestamp.now().strftime("%Y%m%d_%H%M%S")
+    json_path = os.path.join(OUTPUTS_DIR, f"summary_{timestamp}.json")
+    with open(json_path, "w", encoding="utf-8") as jf:
+        json.dump(df_row.to_dict(orient="records"), jf, indent=2)
+    csv_path = os.path.join(OUTPUTS_DIR, f"row_{timestamp}.csv")
+    df_row.to_csv(csv_path,index=False)
+    import zipfile
+    precise_zip = os.path.join(OUTPUTS_DIR, f"result_precise_{timestamp}.zip")
+    with zipfile.ZipFile(precise_zip, 'w') as zf:
+        zf.write(annotated_path, arcname=os.path.basename(annotated_path))
+        zf.write(json_path, arcname=os.path.basename(json_path))
+        zf.write(csv_path, arcname=os.path.basename(csv_path))
+    return precise_zip
