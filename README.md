@@ -102,9 +102,9 @@ Below are the sample outputs of the **DermalScan – AI Facial Aging Detection S
 
 <img src="outputs/2025-11-04 (2).png" alt="DermalScan Output 1" style="width:100%; max-width:700px; margin-bottom:15px;"/>
 
-<img src="outputs/2025-11-04 (4).png" alt="DermalScan Output 2" style="width:100%; max-width:700px; margin-bottom:15px;"/>
+<img src="outputs/2025-11-19 (3).png" style="width:100%; max-width:700px; margin-bottom:15px;"/>
 
-<img src="outputs/2025-11-04 (6).png" alt="DermalScan Output 3" style="width:100%; max-width:700px;"/>
+<img src="outputs/2025-11-19 (5).png" alt="DermalScan Output 3" style="width:100%; max-width:700px;"/>
 
 </div>
 
